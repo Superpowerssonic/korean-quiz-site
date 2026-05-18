@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Korean Quiz Live</title>
+  <title>Korean Quiz Live v2</title>
   <meta name="description" content="A production-ready static Korean quiz page for English-speaking learners with instant feedback and results." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,7 @@
       --color-bg:#f7f6f2;--color-surface:#f9f8f5;--color-surface-2:#fbfbf9;--color-surface-offset:#f3f0ec;--color-surface-dynamic:#e6e4df;--color-divider:#dcd9d5;--color-border:#d4d1ca;
       --color-text:#28251d;--color-text-muted:#6f6b66;--color-text-faint:#aaa7a1;--color-text-inverse:#f9f8f4;
       --color-primary:#01696f;--color-primary-hover:#0c4e54;--color-primary-active:#0f3638;--color-primary-highlight:#cedcd8;
-      --color-success:#437a22;--color-warning:#964219;--color-error:#a12c7b;
+      --color-success:#437a22;--color-warning:#b56a18;--color-error:#a12c7b;--color-choice-a:#dceee8;--color-choice-b:#e7eef9;--color-choice-c:#f3ead8;--color-choice-d:#efe3ef;
       --radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;--radius-xl:1rem;--radius-full:9999px;
       --shadow-sm:0 1px 2px oklch(0.2 0.01 80 / 0.06);--shadow-md:0 8px 24px oklch(0.2 0.01 80 / 0.08);--shadow-lg:0 16px 40px oklch(0.2 0.01 80 / 0.12);
       --font-display:'Instrument Serif', Georgia, serif;--font-body:'Inter', Arial, sans-serif;
@@ -30,7 +30,7 @@
       --color-bg:#171614;--color-surface:#1c1b19;--color-surface-2:#201f1d;--color-surface-offset:#22211f;--color-surface-dynamic:#2d2c2a;--color-divider:#262523;--color-border:#393836;
       --color-text:#e4e1da;--color-text-muted:#b2aea7;--color-text-faint:#736f69;--color-text-inverse:#201f1d;
       --color-primary:#4f98a3;--color-primary-hover:#65acb7;--color-primary-active:#1a626b;--color-primary-highlight:#313b3b;
-      --color-success:#85be5b;--color-warning:#d08d5a;--color-error:#d163a7;
+      --color-success:#85be5b;--color-warning:#e2a564;--color-error:#d163a7;--color-choice-a:#1e3530;--color-choice-b:#1e2b3f;--color-choice-c:#3a2f20;--color-choice-d:#352637;
       --shadow-sm:0 1px 2px oklch(0 0 0 / .2);--shadow-md:0 8px 24px oklch(0 0 0 / .28);--shadow-lg:0 16px 40px oklch(0 0 0 / .4);
     }
     *,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
@@ -65,11 +65,22 @@
     .question-title{font-size:var(--text-xl);line-height:1.12;max-width:20ch}
     .question-sub{margin-top:var(--space-3);color:var(--color-text-muted)}
     .choices{display:grid;gap:var(--space-3);margin-top:var(--space-6)}
-    .choice{width:100%;text-align:left;display:flex;gap:var(--space-3);align-items:flex-start;min-height:64px;padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-surface-2);border:1px solid color-mix(in oklab,var(--color-text) 8%, transparent)}
+    .choice{width:100%;text-align:left;display:flex;gap:var(--space-3);align-items:flex-start;min-height:64px;padding:var(--space-4);border-radius:var(--radius-lg);background:var(--choice-bg,var(--color-surface-2));border:1px solid color-mix(in oklab,var(--color-text) 8%, transparent);color:#ffffff;font-weight:800;text-shadow:0 1px 1px rgba(0,0,0,.35)}
     .choice:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm)}
-    .choice.selected{border-color:var(--color-primary);background:color-mix(in oklab,var(--color-primary) 12%, var(--color-surface-2))}
+    .choice.selected{border-color:#ffffff;background:color-mix(in oklab,var(--color-primary) 40%, #183538)}
     .choice.correct{border-color:var(--color-success);background:color-mix(in oklab,var(--color-success) 14%, var(--color-surface-2))}
-    .choice.wrong{border-color:var(--color-error);background:color-mix(in oklab,var(--color-error) 14%, var(--color-surface-2))}
+    .choice.wrong{border-color:var(--color-error);background:color-mix(in oklab,var(--color-error) 45%, #1c1c1c)}
+    .choice.choice-a{--choice-bg:var(--color-choice-a)}
+    .choice.choice-b{--choice-bg:var(--color-choice-b)}
+    .choice.choice-c{--choice-bg:var(--color-choice-c)}
+    .choice.choice-d{--choice-bg:var(--color-choice-d)}
+    .chip.topic-travel{background:color-mix(in oklab,var(--color-blue) 18%, var(--color-surface-offset));color:var(--color-blue)}
+    .chip.topic-cafe{background:color-mix(in oklab,var(--color-warning) 18%, var(--color-surface-offset));color:var(--color-warning)}
+    .chip.topic-shopping{background:color-mix(in oklab,var(--color-purple) 18%, var(--color-surface-offset));color:var(--color-purple)}
+    .chip.topic-daily-life,.chip.topic-politeness,.chip.topic-greetings{background:color-mix(in oklab,var(--color-primary) 18%, var(--color-surface-offset));color:var(--color-primary)}
+    .chip.topic-restaurant{background:color-mix(in oklab,var(--color-orange) 18%, var(--color-surface-offset));color:var(--color-orange)}
+    .chip.topic-directions,.chip.topic-transport{background:color-mix(in oklab,var(--color-gold) 18%, var(--color-surface-offset));color:var(--color-gold)}
+    .chip.topic-survival-korean{background:color-mix(in oklab,var(--color-success) 18%, var(--color-surface-offset));color:var(--color-success)}
     .key{flex:0 0 34px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--color-surface-offset);font-size:var(--text-sm);font-weight:800}
     .explanation{margin-top:var(--space-5);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-surface-offset);display:none}
     .explanation.show{display:block}
@@ -119,7 +130,7 @@
           <div>
             <span class="eyebrow">Static quiz website</span>
             <h1>Practice real Korean phrases, then see your score instantly.</h1>
-            <p>This page is built for English-speaking learners who want fast, low-friction Korean practice from YouTube links. No login, no database, no setup for the learner.</p>
+            <p>This page is built for English-speaking learners who want fast, low-friction Korean practice from YouTube links. No login, no database, and now it can also rotate quiz sets automatically from simple data blocks.</p>
           </div>
           <div class="action-row">
             <button class="btn btn-primary" id="startBtn">Start quiz</button>
@@ -217,6 +228,10 @@
             <p>Everything runs in the browser, so you can host it cheaply and update it by replacing one file.</p>
           </article>
           <article class="feature-card">
+            <h3>Auto-switch ready</h3>
+            <p>You can replace or rotate quiz sets by editing one data block, so content updates are much easier for non-developers.</p>
+          </article>
+          <article class="feature-card">
             <h3>English-first UI</h3>
             <p>English learners understand what to do immediately, while the quiz content stays focused on Korean.</p>
           </article>
@@ -234,7 +249,8 @@
   </div>
 
   <script>
-    const questionBank = [
+    const quizSets = {
+      default: [
       {
         topic: 'Travel',
         title: 'How do you say “Where is the subway station?” in Korean?',
@@ -315,7 +331,22 @@
         answer: 0,
         explanation: '천천히 말해 주세요 means “Please speak slowly.” This is very useful for learners.'
       }
-    ];
+      ],
+      cafe: [
+        { topic: 'Café', title: 'What does “뜨거운 라테 한 잔 주세요” mean?', prompt: 'Choose the correct English meaning.', choices: ['Please give me one hot latte.', 'I want iced tea.', 'Where is the café?', 'This latte is too sweet.'], answer: 0, explanation: '뜨거운 means hot, 한 잔 주세요 means please give me one cup.' },
+        { topic: 'Café', title: 'Which phrase means “Can I get this to go?”', prompt: 'Choose the best Korean sentence.', choices: ['포장해 주세요.', '앉아 주세요.', '기다려 주세요.', '계산해 주세요.'], answer: 0, explanation: '포장해 주세요 means “Please pack it” or “To go, please.”' },
+        { topic: 'Café', title: 'What does “시럽 넣어 주세요” mean?', prompt: 'Choose the correct translation.', choices: ['Please add syrup.', 'Please remove ice.', 'Please make it decaf.', 'Please make it stronger.'], answer: 0, explanation: '넣어 주세요 means “Please put/add it in.”' },
+        { topic: 'Café', title: 'Which Korean phrase means “No ice, please”?', prompt: 'Pick the correct expression.', choices: ['얼음 많이 주세요.', '얼음 빼 주세요.', '컵 주세요.', '빨대 있어요?'], answer: 1, explanation: '빼 주세요 means “Please remove it.” 얼음 빼 주세요 = “No ice, please.”' }
+      ]
+    };
+
+    function getQuizSetFromUrl(){
+      const params = new URLSearchParams(window.location.search);
+      const setName = params.get('set');
+      return quizSets[setName] || quizSets.default;
+    }
+
+    let questionBank = getQuizSetFromUrl();
 
     const state = { current: 0, answers: Array(questionBank.length).fill(null) };
 
@@ -374,6 +405,7 @@
       els.questionTitle.textContent = q.title;
       els.questionPrompt.textContent = q.prompt;
       els.questionTopic.textContent = q.topic;
+      els.questionTopic.className = 'chip ' + 'topic-' + q.topic.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       els.topicCount.textContent = q.topic;
       els.choices.innerHTML = '';
 
@@ -386,6 +418,8 @@
           if (index === q.answer) classes.push('correct');
           if (selected && index !== q.answer) classes.push('wrong');
         }
+        const choiceClass = ['choice-a','choice-b','choice-c','choice-d'][index] || 'choice-a';
+        classes.push(choiceClass);
         btn.className = classes.join(' ');
         btn.innerHTML = `<span class="key">${String.fromCharCode(65 + index)}</span><span>${choice}</span>`;
         btn.addEventListener('click', ()=> chooseAnswer(index));
